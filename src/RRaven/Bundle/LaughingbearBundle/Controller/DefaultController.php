@@ -66,7 +66,7 @@ class DefaultController extends LaughingbearController
       
       ksort($results, SORT_NUMERIC);
       
-      $nineam = strtotime("2 days ago");
+      $nineam = strtotime("9AM GMT");
       $lastStart = $nineam;
       foreach (array_keys($results) as $key) {
         if ($key < $nineam) {
