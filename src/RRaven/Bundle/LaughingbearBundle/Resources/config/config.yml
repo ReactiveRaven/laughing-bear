@@ -1,0 +1,7 @@
+services:
+    rraven.helper.apimap:
+        class: RRaven\Bundle\LaughingbearBundle\Helper\ApiMapHelper
+        arguments: ["@annotation_reader", "@logger"]
+    rraven.helper.api:
+        class: RRaven\Bundle\LaughingbearBundle\Helper\ApiHelper
+        arguments: ["@annotation_reader", "@logger", "@buzz.browser.rraven.laughingbear.github"]

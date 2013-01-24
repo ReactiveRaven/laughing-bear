@@ -31,6 +31,7 @@ class ConnectController extends BaseConnectController {
 	private $_api_map_helper;
 
   public function registrationAction(Request $request, $key) {
+    
     $this->error = $request->getSession()->get('_hwi_oauth.registration_error.' . $key);
     
     $hasUser = $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED');
@@ -82,13 +83,8 @@ class ConnectController extends BaseConnectController {
     $em->persist($github_access_token);
     $em->persist($github_user);
     $em->flush();
-    
-    $message = new Message("my_repos", $github_user->getLogin(), $github_access_token->getToken());
-    
-    
-    $this->container->get('old_sound_rabbit_mq.rraven.spider.github_producer')->publish(serialize($message));
    
-    $original_username = $userInformation->getUsername();
+    $original_username = $userInformation->getNickname();
     $i = 0;
     $testName = $original_username;
 
@@ -105,7 +101,7 @@ class ConnectController extends BaseConnectController {
     
     $this->container->get("hwi_oauth.account.connector")->connect($user, $userInformation);
     
-    $this->authenticateUser($user);
+    $this->authenticateUser($user, null, null);
     
     return $this->container->get('templating')->renderResponse('HWIOAuthBundle:Connect:registration_success.html.twig', array(
           'userInformation' => $userInformation,
