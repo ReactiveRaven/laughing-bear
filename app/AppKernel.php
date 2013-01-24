@@ -19,6 +19,12 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+						new Buzz\Bundle\BuzzBundle\BuzzBundle(),
+            new RRaven\Bundle\HWIOAuthOverrideBundle\RRavenHWIOAuthOverrideBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new RRaven\Bundle\LaughingbearBundle\RRavenLaughingbearBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -26,6 +32,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new Elao\WebProfilerExtraBundle\WebProfilerExtraBundle();
         }
 
         return $bundles;

@@ -18,7 +18,13 @@
         "sensio/generator-bundle": "2.1.*",
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
-        "kriswallsmith/assetic": "1.1.*@dev"
+        "kriswallsmith/assetic": "1.1.*@dev",
+        "hwi/oauth-bundle": "*",
+        "friendsofsymfony/user-bundle": "*",
+        "symfony/twig-bundle": "*",
+        "doctrine/doctrine-migrations-bundle": "*",
+        "elao/web-profiler-extra-bundle": "*",
+				"juliendidier/buzz-bundle": "*"
     },
     "scripts": {
         "post-install-cmd": [
@@ -37,5 +43,6 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web"
-    }
+    },
+    "minimum-stability": "dev"
 }
