@@ -41,7 +41,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap",
-            "Eloquent\\Composer\\NPMBridge\\NPMBridge::handle"
+            "Eloquent\\Composer\\NPMBridge\\NPMBridge::handle",
+            "RRaven\\Bundle\\LaughingbearBundle\\Composer\\ScriptHandler::dumpAssets"
         ],
         "post-update-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
@@ -49,7 +50,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap",
-            "Eloquent\\Composer\\NPMBridge\\NPMBridge::handle"
+            "Eloquent\\Composer\\NPMBridge\\NPMBridge::handle",
+            "RRaven\\Bundle\\LaughingbearBundle\\Composer\\ScriptHandler::dumpAssets"
         ]
     },
     "extra": {
