@@ -1,0 +1,12 @@
+{
+  "name": "laughing-bear",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ReactiveRaven/laughing-bear.git"
+  },
+  "dependencies": {
+    "less": "*",
+    "sass": "*"
+  }
+}

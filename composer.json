@@ -24,20 +24,32 @@
         "symfony/twig-bundle": "*",
         "doctrine/doctrine-migrations-bundle": "*",
         "elao/web-profiler-extra-bundle": "*",
-				"juliendidier/buzz-bundle": "*"
+        "juliendidier/buzz-bundle": "*",
+        "sonata-project/admin-bundle": "*",
+        "sonata-project/doctrine-orm-admin-bundle": "*",
+        "sonata-project/cache-bundle": "*",
+        "mopa/bootstrap-bundle": "dev-master",
+        "twitter/bootstrap": "dev-master",
+        "knplabs/knp-paginator-bundle": "dev-master",
+        "craue/formflow-bundle": "dev-master",
+        "eloquent/composer-npm-bridge": "*"
     },
     "scripts": {
         "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap",
+            "Eloquent\\Composer\\NPMBridge\\NPMBridge::handle"
         ],
         "post-update-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap",
+            "Eloquent\\Composer\\NPMBridge\\NPMBridge::handle"
         ]
     },
     "extra": {
