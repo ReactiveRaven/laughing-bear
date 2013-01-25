@@ -1,5 +1,5 @@
 {
-    "hash": "9c9b09093863dd05f3c7ea97ad5da5ad",
+    "hash": "f60d0de2c069c5b41790281dae738ae9",
     "packages": [
         {
             "name": "craue/formflow-bundle",
@@ -1577,6 +1577,33 @@
             "keywords": [
                 "Symfony2",
                 "composer"
+            ]
+        },
+        {
+            "name": "nervo/yuicompressor",
+            "version": "2.4.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nervo/yuicompressor.git",
+                "reference": "2.4.7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/nervo/yuicompressor/zipball/2.4.7",
+                "reference": "2.4.7",
+                "shasum": ""
+            },
+            "time": "2012-05-12 01:31:30",
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "description": "YUI Compressor is an open source tool that supports the compression of both JavaScript and CSS files. The JavaScript compression removes comments and white-spaces as well as obfuscates local variables using the smallest possible variable name. CSS compression is done using a regular-expression-based CSS minifier.",
+            "homepage": "https://github.com/yui/yuicompressor",
+            "keywords": [
+                "java",
+                "yui"
             ]
         },
         {

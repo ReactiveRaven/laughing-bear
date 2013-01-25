@@ -32,7 +32,8 @@
         "twitter/bootstrap": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
         "craue/formflow-bundle": "dev-master",
-        "eloquent/composer-npm-bridge": "*"
+        "eloquent/composer-npm-bridge": "*",
+        "nervo/yuicompressor": "2.4.7"
     },
     "scripts": {
         "post-install-cmd": [
