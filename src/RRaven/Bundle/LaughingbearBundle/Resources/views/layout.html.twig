@@ -1,7 +1,8 @@
 {% extends 'MopaBootstrapBundle::base.html.twig' %}
 
 {% block body %}
-    <h2>Layout</h2>
+{% block navbar %}{{ mopa_bootstrap_navbar('frontendNavbar') }}{% endblock navbar %}
+<br /><br /><br />
     {% block content %}
     {% endblock %}
 {% endblock %}

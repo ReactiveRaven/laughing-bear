@@ -5,3 +5,35 @@ services:
     rraven.helper.api:
         class: RRaven\Bundle\LaughingbearBundle\Helper\ApiHelper
         arguments: ["@annotation_reader", "@logger", "@buzz.browser.rraven.laughingbear.github"]
+    rraven.navbar:
+        class: '%mopa_bootstrap.navbar.generic%'
+        scope: request
+        arguments:
+            - { leftmenu: @rraven.navbar_main_menu=, rightmenu: @rraven.navbar_right_menu= }
+            - {}
+            - { title: "RRaven", titleRoute: "rraven_laughingbear_default_index", fixedTop: true, isFluid: false }
+        tags:
+            - { name: mopa_bootstrap.navbar, alias: frontendNavbar }
+
+    rraven.navbar_menu_builder:
+        class: RRaven\Bundle\LaughingbearBundle\Menu\NavbarMenuBuilder
+        scope: request
+        arguments: [ '@knp_menu.factory', '@security.context' ]
+
+    rraven.navbar_main_menu:
+        class: Knp\Menu\MenuItem
+        factory_service: rraven.navbar_menu_builder
+        factory_method: createMainMenu
+        arguments: [ '@request' ]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: main }
+
+    rraven.navbar_right_menu:
+        class: Knp\Menu\MenuItem
+        factory_service: rraven.navbar_menu_builder
+        factory_method: createRightSideDropdownMenu
+        arguments: [ '@request' ]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: main }
