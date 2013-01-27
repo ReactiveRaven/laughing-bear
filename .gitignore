@@ -14,3 +14,7 @@ app/config/parameters.yml
 /node_modules/
 /web/css/
 /web/js/
+
+# MacOS
+*/.DS_Store
+.DS_Store
