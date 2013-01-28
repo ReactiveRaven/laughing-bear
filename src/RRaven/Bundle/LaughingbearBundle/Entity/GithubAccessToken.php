@@ -139,9 +139,9 @@ class GithubAccessToken {
 		}
 		return 
 			(
-				$this->_browser 
-					? $this->_browser 
-					: $this->_browser = $this->container->get('buzz')->getBrowser('rraven.gitpanel.github')
+				$this->_browser
+					? $this->_browser
+					: $this->_browser = $this->container->get('buzz')->getBrowser('rraven.laughingbear.github')
 			)
 		;
 	}
@@ -180,6 +180,7 @@ class GithubAccessToken {
 		}
 		$headers[] = "Authorization: token " . $this->getToken();
 		$response = $this->getBuzzBrowser()->get($url, $headers);
+    //var_dump($this->getBuzzBrowser());die();
 		/* @var $response Response */
 		$this->getRateLimit()->setRemaining($response->getRateLimitRemaining());
 		return $response;

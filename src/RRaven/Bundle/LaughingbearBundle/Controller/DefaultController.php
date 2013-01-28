@@ -32,6 +32,21 @@ class DefaultController extends LaughingbearController
             $name = $this->getUser()->getUsername();
         }
         
+        $github_user = $this->getDoctrine()->getEntityManager()->getRepository("RRavenLaughingbearBundle:GithubUser")->findOneBy(array("github_id" => $this->getUser()->getGithubId()));
+        /* @var $github_user \RRaven\Bundle\LaughingbearBundle\Entity\GithubUser */
+        
+        $access_token = $github_user->getAccessToken();
+        /* @var $access_token \RRaven\Bundle\LaughingbearBundle\Entity\GithubAccessToken */
+        $access_token->container = $this->container;
+        //$response = $access_token->makeGetRequest("https://api.github.com/user");
+        
+        $mybrowser = $this->get('buzz')->getBrowser('rraven.laughingbear.github');
+        var_dump($mybrowser);
+        
+        //var_dump($response->getContent());
+        
+        
+        
         return array('name' => $name);
     }
 
