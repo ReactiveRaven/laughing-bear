@@ -24,7 +24,7 @@ class User extends BaseUser
     protected $githubId;
 		
 		/**
-		 * @return \RRaven\Bundle\GitpanelBundle\Entity\User
+		 * @return \RRaven\Bundle\LaughingbearBundle\Entity\User
 		 */
 		public static function manufacture()
 		{

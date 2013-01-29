@@ -102,10 +102,12 @@ buzz:
     browsers:
         default:
             client: curl
+            message_factory: 'RRaven\\Bundle\\LaughingbearBundle\\Utility\\Buzz\\Message\\Factory\\Factory'
+            host: https://api.github.com
         rraven.laughingbear.github:
             client: curl
             message_factory: RRaven\Bundle\LaughingbearBundle\Utility\Buzz\Message\Factory\Factory
-            host: http://www.google.com
+            host: https://api.github.com
 
 sonata_admin:
     title:      Sonata Project

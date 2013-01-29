@@ -1,0 +1,18 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     laughingbear
+    database_user:     laughingbear
+    database_password: password
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            en
+    secret:            who_knows
+    github_oauth_client_id: get_from_github_in_applications_pane
+    github_oauth_client_secret: get_from_github_in_applications_pane
+    node_executable:   /usr/bin/node

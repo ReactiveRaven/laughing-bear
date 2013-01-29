@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use RRaven\Bundle\LaughingbearBundle\Entity;
 
 class DefaultController extends LaughingbearController
 {
@@ -33,6 +34,75 @@ class DefaultController extends LaughingbearController
         }
         
         return array('name' => $name);
+    }
+    
+    /**
+     * @Route("/repos")
+     * @Template()
+     */
+    public function listReposAction() {
+      $browser = $this->getBuzzBrowser();
+      
+      $myorgs = json_decode(
+        $browser->get(
+          "https://api.github.com/user/orgs",
+          array("Authorization: token " . $this->getAccessToken())
+        )->getContent(),
+        true
+      );
+      
+      $repo_urls = array("https://api.github.com/user/repos");
+      
+      foreach ($myorgs as $org) {
+        $repo_urls[] = $org["repos_url"];
+      }
+      
+      $repos = array();
+      
+      foreach ($repo_urls as $repo_url) {
+        $somerepos = json_decode(
+          $browser->get(
+            $repo_url,
+            array("Authorization: token " . $this->getAccessToken())
+          )->getContent(), 
+          true
+        );
+        
+        foreach ($somerepos as $arepo) {
+          if ($arepo["permissions"]["push"] === true) {
+            $repos[$arepo["full_name"]] = $arepo;
+          }
+        }
+      }
+      
+      $em = $this->getDoctrine()->getEntityManager();
+      
+      $repo_repository = $em->getRepository("RRavenLaughingbearBundle:GithubRepository");
+      $user_repository = $em->getRepository("RRavenLaughingbearBundle:GithubUser");
+      $user_object = $user_repository->findOneBy(array("login" => $this->getUser()->getUsername()));
+      
+      ;
+      
+      foreach ($repos as $repo_data) {
+        $repo_object = new Entity\GithubRepository();
+        try
+        {
+          $result = $repo_repository->findOneBy(array("full_name" => $repo_data["full_name"]));
+          if (!$result) {
+            $this->getApiMapHelper()->applyDataToEntity($repo_data, $repo_object);
+            $repo_object->setUser($user_object);
+            $em->persist($repo_object);
+          }
+        }
+        catch (Exception $e) {
+          $e = $e; // don't care, just ignore it.
+        }
+      }
+      $em->flush();
+      
+      
+      return array("json"=>$this->prettifyJson($repos));
+      
     }
 
     /**
@@ -143,7 +213,9 @@ class DefaultController extends LaughingbearController
      */
     function prettifyJson($json)
     {
-
+        if (is_array($json)) {
+          $json = json_encode($json);
+        }
         $result = '';
         $pos = 0;
         $strLen = strlen($json);

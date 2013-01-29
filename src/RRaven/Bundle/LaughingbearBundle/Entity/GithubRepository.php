@@ -107,7 +107,7 @@ class GithubRepository
 		
 		/**
 		 * @ORM\ManyToOne(targetEntity="GithubOrganization", inversedBy="repositories", fetch="LAZY")
-         * @Api\Link(url = "organization/url", id = "organization/id", target = "github_id", required = "true", auto_import = "true")
+     * @Api\Link(url = "organization/url", id = "organization/id", target = "github_id", required = "true", auto_import = "true")
 		 */
 		protected $organization;
 		
@@ -118,7 +118,7 @@ class GithubRepository
 		protected $permissions;
 
 		/**
-		 * @ORM\Column(type="string", length=255)
+		 * @ORM\Column(type="string", length=255, nullable=true)
 		 * @Api\Map(keys={"language"})
 		 */
 		protected $language;

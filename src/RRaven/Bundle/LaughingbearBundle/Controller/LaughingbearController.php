@@ -12,6 +12,7 @@ abstract class LaughingbearController extends Controller
 {
 	private $_securityContext = null;
 	private $_browser = null;
+  private $_api_map_helper;
 	
   /**
    * @return Session
@@ -58,4 +59,19 @@ abstract class LaughingbearController extends Controller
 			)
 		;
   }
+  
+  /**
+	 * Returns an instance of ApiMapHelper for processing data into entities
+	 * 
+	 * @return \RRaven\Bundle\LaughingbearBundle\Helper\ApiMapHelper
+	 */
+	protected function getApiMapHelper() {
+		return 
+			(
+				$this->_api_map_helper
+					? $this->_api_map_helper
+					: $this->_api_map_helper = $this->container->get("rraven.helper.apimap")
+			)
+		;
+	}
 }

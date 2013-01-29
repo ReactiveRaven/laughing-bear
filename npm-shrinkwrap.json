@@ -16,7 +16,8 @@
     },
     "sass": {
       "version": "0.5.0",
-      "from": "sass@0.5.0"
+      "from": "sass@0.5.0",
+      "resolved": "https://registry.npmjs.org/sass/-/sass-0.5.0.tgz"
     }
   }
 }
