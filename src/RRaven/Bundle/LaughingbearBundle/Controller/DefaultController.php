@@ -43,6 +43,10 @@ class DefaultController extends LaughingbearController
      */
     public function buzzTestAction()
     {
+      $menumenu = $this->get("rraven.helper.menumenu");
+      /* @var $menumenu \RRaven\Bundle\LaughingbearBundle\Helper\MenuMenuHelper */
+      $menumenu->sniffMenus();
+      
         $em = $this->getDoctrine()->getEntityManager();
         
         $githubUser_repo = $em->getRepository("RRavenLaughingbearBundle:GithubUser");

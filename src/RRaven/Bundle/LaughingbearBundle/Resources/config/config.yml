@@ -5,13 +5,16 @@ services:
     rraven.helper.api:
         class: RRaven\Bundle\LaughingbearBundle\Helper\ApiHelper
         arguments: ["@annotation_reader", "@logger", "@rraven.buzz.github"]
+    rraven.helper.menumenu:
+        class: RRaven\Bundle\LaughingbearBundle\Helper\MenuMenuHelper
+        arguments: ["@annotation_reader", "@logger", "@service_container"]
     rraven.navbar:
         class: '%mopa_bootstrap.navbar.generic%'
         scope: request
         arguments:
             - { leftmenu: @rraven.navbar_main_menu=, rightmenu: @rraven.navbar_right_menu= }
             - {}
-            - { title: "RRaven", titleRoute: "rraven_laughingbear_default_index", fixedTop: true, isFluid: false }
+            - { title: "Laughing Bear", titleRoute: "rraven_laughingbear_default_index", fixedTop: true, isFluid: false }
         tags:
             - { name: mopa_bootstrap.navbar, alias: frontendNavbar }
 

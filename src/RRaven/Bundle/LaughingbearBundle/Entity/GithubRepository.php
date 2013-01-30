@@ -7,6 +7,7 @@ use RRaven\Bundle\LaughingbearBundle\Annotations\Api;
 
 /**
  * @ORM\Entity 
+ * @ORM\Table(indexes={@ORM\Index(name="full_name_idx", columns={"full_name"})})
 */
 class GithubRepository
 {
