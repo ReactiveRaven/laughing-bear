@@ -23,12 +23,15 @@ class NavbarMenuBuilder extends AbstractNavbarMenuBuilder
     {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav');
+        
+        $dropdown = $this->createDropdownMenuItem($menu, "More");
+        $dropdown->addChild("buzztest", array("route" => "rraven_laughingbear_default_buzztest"));
 
         //$menu->addChild('Shipdev', array('route' => 'shipdev'));
 
-        //$dropdown = $this->createDropdownMenuItem($menu, "Mehr");
-        //$dropdown->addChild('Captain Ränge', array('route' => 'revorix_ranks'));
-        //$dropdown->addChild('Schiffs-XP', array('route' => 'revorix_xptool'));
+//        $dropdown = $this->createDropdownMenuItem($menu, "Mehr");
+//        $dropdown->addChild('Captain Ränge', array('route' => 'rraven_laughingbear_default_buzztest'));
+//        $dropdown->addChild('Schiffs-XP', array('route' => 'rraven_laughingbear_default_buzztest'));
 
         return $menu;
     }
@@ -44,7 +47,7 @@ class NavbarMenuBuilder extends AbstractNavbarMenuBuilder
             $menu->addChild('Login', array('route' => 'hwi_oauth_connect'));
         }
 
-        $this->addDivider($menu, true);
+        //$this->addDivider($menu, true);
         //$menu->addChild('Impressum', array('route' => 'impressum'));
 
         return $menu;

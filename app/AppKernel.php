@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new Buzz\Bundle\BuzzBundle\BuzzBundle(),
             new RRaven\Bundle\HWIOAuthOverrideBundle\RRavenHWIOAuthOverrideBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new FOS\UserBundle\FOSUserBundle(),
@@ -36,6 +35,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
+            new Buzz\Bundle\ProfilerBundle\BuzzProfilerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

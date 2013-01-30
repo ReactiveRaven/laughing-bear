@@ -37,8 +37,28 @@ class DefaultController extends LaughingbearController
     }
     
     /**
+     * @Route("/buzztest")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function buzzTestAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $githubUser_repo = $em->getRepository("RRavenLaughingbearBundle:GithubUser");
+        $githubUser = $githubUser_repo->findOneBy(array("login" => $this->getUser()->getUsername()));
+        /* @var $githubUser Entity\GithubUser */
+        $accessToken = $githubUser->getAccessToken();
+        /* @var $accessToken Entity\GithubAccessToken */
+        $response = $accessToken->makeGetRequest("user/orgs");
+        
+        return array("json" => $this->prettifyJson($response->getContent()));
+    }
+    
+    /**
      * @Route("/repos")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function listReposAction() {
       $browser = $this->getBuzzBrowser();

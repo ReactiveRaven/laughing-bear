@@ -4,7 +4,7 @@ services:
         arguments: ["@annotation_reader", "@logger"]
     rraven.helper.api:
         class: RRaven\Bundle\LaughingbearBundle\Helper\ApiHelper
-        arguments: ["@annotation_reader", "@logger", "@buzz.browser.rraven.laughingbear.github"]
+        arguments: ["@annotation_reader", "@logger", "@rraven.buzz.github"]
     rraven.navbar:
         class: '%mopa_bootstrap.navbar.generic%'
         scope: request
@@ -37,3 +37,16 @@ services:
         scope: request
         tags:
             - { name: knp_menu.menu, alias: main }
+
+    rraven.buzz.github.messagefactory:
+        class: RRaven\Bundle\LaughingbearBundle\Utility\Buzz\Message\Factory\Factory
+        public: false
+        
+    rraven.buzz.default.client:
+        class: Buzz\Client\Curl
+        tags:
+            -  { name: buzz.client }
+
+    rraven.buzz.github:        
+        class: Buzz\Browser
+        arguments: ["@rraven.buzz.default.client", "@rraven.buzz.github.messagefactory"]

@@ -53,18 +53,18 @@ class ConnectController extends BaseConnectController {
     
     /* @var $userInformation UserResponseInterface */
     
-		$em = $this->container->get("doctrine")->getEntityManager();
-		/* @var $em \Doctrine\ORM\EntityManager */
-		
-		try
-		{
-			$github_user = $em->getRepository("RRavenLaughingbearBundle:GithubUser")->findOneByGithubId($userInformation->getUsername());
-		} catch (\Exception $exception) {
-			$exception = $exception; // not used
-			$github_user = GithubUser::manufacture();
-		}
-		
-		$this->getApiMapHelper()->applyDataToEntity($userInformation->getResponse(), $github_user);
+    $em = $this->container->get("doctrine")->getEntityManager();
+    /* @var $em \Doctrine\ORM\EntityManager */
+
+    try
+    {
+        $github_user = $em->getRepository("RRavenLaughingbearBundle:GithubUser")->findOneByGithubId($userInformation->getUsername());
+    } catch (\Exception $exception) {
+        $exception = $exception; // not used
+        $github_user = GithubUser::manufacture();
+    }
+
+    $this->getApiMapHelper()->applyDataToEntity($userInformation->getResponse(), $github_user);
     
     $github_access_token = new GithubAccessToken();
     $github_access_token->setToken($error->getAccessToken());

@@ -12,7 +12,7 @@ use RRaven\Bundle\LaughingbearBundle\Utility\Exception\RateLimitException;
 /**
  * @ORM\Entity
  */
-class GithubAccessToken {
+class GithubAccessToken extends AbstractContainerAwareEntity {
 
   /**
    * @ORM\Id
@@ -141,7 +141,7 @@ class GithubAccessToken {
 			(
 				$this->_browser
 					? $this->_browser
-					: $this->_browser = $this->container->get('buzz')->getBrowser('rraven.laughingbear.github')
+					: $this->_browser = $this->getContainer()->get('rraven.buzz.github')
 			)
 		;
 	}
@@ -160,6 +160,20 @@ class GithubAccessToken {
 		
 		return $this;
 	}
+    
+    /**
+     * Tidies up a URL to include the necessary github url if missing
+     * 
+     * @param string $url
+     * @return string tidied url
+     */
+    private function tidyUrl($url)
+    {
+        if (!preg_match("#^https?://#", $url)) {
+            $url = "https://api.github.com/" . ltrim($url, "/");
+        }
+        return $url;
+    }
 	
 	/**
 	 * Makes a GET request via Buzz
@@ -179,8 +193,7 @@ class GithubAccessToken {
 			throw new \InvalidArgumentException("Expected headers to be an array");
 		}
 		$headers[] = "Authorization: token " . $this->getToken();
-		$response = $this->getBuzzBrowser()->get($url, $headers);
-    //var_dump($this->getBuzzBrowser());die();
+		$response = $this->getBuzzBrowser()->get($this->tidyUrl($url), $headers);
 		/* @var $response Response */
 		$this->getRateLimit()->setRemaining($response->getRateLimitRemaining());
 		return $response;
@@ -205,7 +218,7 @@ class GithubAccessToken {
 			throw new \InvalidArgumentException("Expected headers to be an array");
 		}
 		$headers[] = "Authorization: token " . $this->getToken();
-		$response = $this->getBuzzBrowser()->post($url, $headers, $content);
+		$response = $this->getBuzzBrowser()->post($this->tidyUrl($url), $headers, $content);
 		/* @var $response Response */
 		$this->getRateLimit()->setRemaining($response->getRateLimitRemaining());
 		return $response;
@@ -230,7 +243,7 @@ class GithubAccessToken {
 			throw new \InvalidArgumentException("Expected headers to be an array");
 		}
 		$headers[] = "Authorization: token " . $this->getToken();
-		$response = $this->getBuzzBrowser()->delete($url, $headers, $content);
+		$response = $this->getBuzzBrowser()->delete($this->tidyUrl($url), $headers, $content);
 		/* @var $response Response */
 		$this->getRateLimit()->setRemaining($response->getRateLimitRemaining());
 		return $response;
@@ -254,7 +267,7 @@ class GithubAccessToken {
 			throw new \InvalidArgumentException("Expected headers to be an array");
 		}
 		$headers[] = "Authorization: token " . $this->getToken();
-		$response = $this->getBuzzBrowser()->head($url, $headers);
+		$response = $this->getBuzzBrowser()->head($this->tidyUrl($url), $headers);
 		/* @var $response Response */
 		$this->getRateLimit()->setRemaining($response->getRateLimitRemaining());
 		return $response;
@@ -279,7 +292,7 @@ class GithubAccessToken {
 			throw new \InvalidArgumentException("Expected headers to be an array");
 		}
 		$headers[] = "Authorization: token " . $this->getToken();
-		$response = $this->getBuzzBrowser()->put($url, $headers, $content);
+		$response = $this->getBuzzBrowser()->put($this->tidyUrl($url), $headers, $content);
 		/* @var $response Response */
 		$this->getRateLimit()->setRemaining($response->getRateLimitRemaining());
 		return $response;
@@ -304,7 +317,7 @@ class GithubAccessToken {
 			throw new \InvalidArgumentException("Expected headers to be an array");
 		}
 		$headers[] = "Authorization: token " . $this->getToken();
-		$response = $this->getBuzzBrowser()->patch($url, $headers, $content);
+		$response = $this->getBuzzBrowser()->patch($this->tidyUrl($url), $headers, $content);
 		/* @var $response Response */
 		$this->getRateLimit()->setRemaining($response->getRateLimitRemaining());
 		return $response;
