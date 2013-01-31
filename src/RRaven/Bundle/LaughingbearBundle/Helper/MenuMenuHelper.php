@@ -41,15 +41,16 @@ class MenuMenuHelper {
   
   public function sniffMenus() {
     
+    $menu_sources = array();
+    
     $router = $this->_container->get("router");
     /* @var $router \Symfony\Bundle\FrameworkBundle\Routing\Router */
     $routes = $router->getRouteCollection()->all();
     
     $annotation_reader = $this->getAnnotationReader();
     
-    foreach ($routes as $route) {
+    foreach ($routes as $route_name => $route) {
       /* @var $route \Symfony\Component\Routing\Route */
-      var_dump($route);
       $controller = $route->getDefault("_controller");
       if (strpos($controller, "::") !== false) {
         $bits = explode("::", $controller);
@@ -61,16 +62,40 @@ class MenuMenuHelper {
         
         $apiMapAnnotation = $annotation_reader->getMethodAnnotation($reflectionMethod, "RRaven\\Bundle\\LaughingbearBundle\\Annotations\\Menu\\Menu");
         
-        var_dump($apiMapAnnotation);
+        if ($apiMapAnnotation instanceof MenuMenu) {
+          if ($apiMapAnnotation->parent === null) {
+            $apiMapAnnotation->parent = "%ROOT";
+          }
+          $menu_sources[] = array("route" => "@" . $route_name, "annotation" => $apiMapAnnotation);
+        }
       }
     }
-    die();
-    foreach ($dump as $item) {
-      var_dump($item);die();
+    
+    $menu_compiled = array("%ROOT" => array());
+    
+    while (count($menu_sources)) {
+      foreach ($menu_sources as $menu_source) {
+        // assemble them by connecting 'annotation/parent's to 'route's.
+
+      }
     }
     
-    var_dump($dump);
+    var_dump($menu_sources);
+    var_dump($menu_compiled);
     die();
+  }
+  
+  private function getKnownRoutes($menu_compiled) {
+    die("This is probably broken");
+    $known_routes = array();
+    foreach ($menu_compiled as $val) {
+      if (is_array($val)) {
+        array_merge($known_routes, $this->getKnownRoutes($val));
+      } else {
+        $known_routes[] = $val->route;
+      }
+    }
+    return array_unique($known_routes);
   }
 	
 	public function applyDataToEntity($data, $entity) {

@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use RRaven\Bundle\LaughingbearBundle\Entity;
+use RRaven\Bundle\LaughingbearBundle\Annotations\Menu\Menu;
 
 class DefaultController extends LaughingbearController
 {
@@ -40,6 +41,7 @@ class DefaultController extends LaughingbearController
      * @Route("/buzztest")
      * @Template()
      * @Secure(roles="ROLE_USER")
+     * @Menu(name="Buzz Test", parent="%ROOT", dropdown="More")
      */
     public function buzzTestAction()
     {

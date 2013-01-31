@@ -16,7 +16,7 @@ class Menu extends Annotation {
    *
    * @var string
    */
-	public $key = null;
+	public $name = null;
   
   /**
    * 
