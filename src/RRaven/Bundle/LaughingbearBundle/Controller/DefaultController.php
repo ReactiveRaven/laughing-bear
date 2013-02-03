@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use RRaven\Bundle\LaughingbearBundle\Entity;
-use RRaven\Bundle\LaughingbearBundle\Annotations\Menu\Menu;
+use RRaven\Bundle\LaughingbearBundle\Annotations\Menu;
 
 class DefaultController extends LaughingbearController
 {
@@ -41,7 +41,7 @@ class DefaultController extends LaughingbearController
      * @Route("/buzztest")
      * @Template()
      * @Secure(roles="ROLE_USER")
-     * @Menu(name="Buzz Test", parent="%ROOT", dropdown="More")
+     * @Menu\Item(name="Buzz Test", path={"Debug"})
      */
     public function buzzTestAction()
     {
@@ -65,6 +65,7 @@ class DefaultController extends LaughingbearController
      * @Route("/repos")
      * @Template()
      * @Secure(roles="ROLE_USER")
+     * @Menu\Item(name="List Repos", path={"Debug", "Github"})
      */
     public function listReposAction() {
       $browser = $this->getBuzzBrowser();
@@ -135,6 +136,8 @@ class DefaultController extends LaughingbearController
      * @Route("/test")
      * @Template()
      * @Secure(roles="ROLE_USER")
+     * @Menu\Item(name="Test", path={"Debug", "Github"}, before="@rraven_laughingbear_default_listrepos")
+     * @Menu\Menu(name="Github", path={"Debug"}, before="@rraven_laughingbear_default_buzztest")
      */
     public function testAction()
     {

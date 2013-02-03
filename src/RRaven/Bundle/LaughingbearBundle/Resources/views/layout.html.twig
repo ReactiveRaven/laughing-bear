@@ -2,6 +2,15 @@
 
 {% block title %}LaughingBear{% endblock %}
 
+{% block head_style %}
+    {{ parent() }}
+    {% stylesheets
+        '@RRavenLaughingbearBundle/Resources/public/darkstrap/darkstrap.css'
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block foot_script %}
 {# parent() #}
 
@@ -29,6 +38,8 @@
 {% block container %}
     {% block navbar %}{{ mopa_bootstrap_navbar('frontendNavbar') }}{% endblock navbar %}
     <br /><br /><br />
-    {% block content %}
-    {% endblock %}
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
 {% endblock %}
