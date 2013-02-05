@@ -61,14 +61,32 @@ class Menu extends Annotation
     
     private $_known_routes = array();
     
+    private function refreshKnownRoutes() {
+      $this->_known_routes = array();
+      foreach ($this->_nodes as $key => $val) {
+        $this->_known_routes[] = $key;
+        if ($val instanceof Menu\Item) {
+          $this->_known_routes[] = $val->getRoute();
+        }
+      }
+    }
+    
+    private function debug($string) {
+      $string = $string;
+      //echo $string . "<br />\n";
+    }
+    
     protected function addChildren($children) {
+      $time = microtime(true);
         $childPath = $this->getPathForChildMenu();
         foreach ($children as $child) {
             if ($child instanceof Menu) {
                 $path = array_slice($child->getPath(), count($childPath));
+                $this->debug("$time Adding child menu " . json_encode(array_merge($child->getPath(), array($child->getName()))) . " to me " . json_encode($childPath) . " with path " . json_encode($path));
                 $this->addMenu($child, $path);
             } else if ($child instanceof Item) {
                 $path = array_slice($child->getPath(), count($childPath));
+                $this->debug("$time Adding child item " . json_encode(array_merge($child->getPath(), array($child->getName()))) . " to me " . json_encode($childPath) . " with path " . json_encode($path));
                 $this->addItem($child, $path);
             } else {
                 throw new \InvalidArgumentException("Unrecognised child type");
@@ -110,6 +128,8 @@ class Menu extends Annotation
             $this->_nodes = $sorted;
         }
         
+        $this->refreshKnownRoutes();
+        
         $this->_dirty = false;
     }
     
@@ -144,7 +164,7 @@ class Menu extends Annotation
                 $newMenu->path = $this->getPathForChildMenu();
                 $newMenu->name = $nodeNow;
                 $newMenu->addItem($item, $nodepath);
-                $this->addMenu($newMenu, array($newMenu->getName()));
+                $this->addMenu($newMenu, array());
             } 
             else 
             { // Yes, so add to it..
@@ -157,7 +177,7 @@ class Menu extends Annotation
                     $newMenu->path = $this->getPathForChildMenu();
                     $newMenu->name = $nodeNow;
                     $newMenu->addItem($existing);
-                    $this->addMenu($newMenu, array($newMenu->getName()));
+                    $this->addMenu($newMenu, array());
                 }
                 // Add the item to the sub-menu
                 $this->_nodes[$nodeNow]->addItem($item, $nodepath);
@@ -195,6 +215,8 @@ class Menu extends Annotation
     }
     
     public function addMenu(Menu $menu, $nodepath = null) {
+        $this->debug("Adding menu " . json_encode($menu->getPathForChildMenu()) . " to me " . json_encode($this->getPathForChildMenu()) . " with nodepath " . json_encode($nodepath) );
+      
         // Nodepath to add item to (eg: `['animal', 'dog', 'pug']`)
         $nodepath = is_array($nodepath) ? $nodepath : $menu->getPath();
         
@@ -204,7 +226,7 @@ class Menu extends Annotation
             
             // We're descenting, so only interested in our own level. Pull off the
             // first node from the nodepath.
-            $nodeNow = array_shift($nodepath);
+            $nodeNow = array_shift($nodepath); // this changes $nodepath btw (!)
             
             // Is there a node already existing?
             if (!isset($this->_nodes[$nodeNow])) 
@@ -226,7 +248,7 @@ class Menu extends Annotation
                     $newMenu->name = $nodeNow;
                     $newMenu->path = $this->getPathForChildMenu();
                     $existingPath = array_slice($existing->getPath(), count($this->getPathForChildMenu()));
-                    var_dump($existingPath);
+                    $this->debug("existingPath: " . json_encode($existingPath));
                     $newMenu->addItem($existing, $existingPath);
                     $this->addMenu($newMenu, array());
                 }
@@ -275,5 +297,18 @@ class Menu extends Annotation
     
     protected function getChildren() {
         return $this->_nodes;
+    }
+    
+    public function toArray() {
+      $this->sort();
+      $return = array();
+      foreach ($this->getChildren() as $child) {
+        if ($child instanceof Menu) {
+          $return[$child->getName()] = $child->toArray();
+        } else if ($child instanceof Item) {
+          $return[$child->getName()] = $child->getRoute();
+        }
+      }
+      return $return;
     }
 }

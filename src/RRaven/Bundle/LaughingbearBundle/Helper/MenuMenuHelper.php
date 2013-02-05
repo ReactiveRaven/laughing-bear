@@ -93,9 +93,9 @@ class MenuMenuHelper
             $menu->addMenu($submenu);
         }
         
-        var_dump($menu);die();
-        
         $menu->sort();
+        
+        var_dump($menu->toArray());
         
         var_dump($menu);die();
     }
