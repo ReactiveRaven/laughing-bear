@@ -21,11 +21,24 @@ class NavbarMenuBuilder extends AbstractNavbarMenuBuilder
 
     public function createMainMenu(Request $request)
     {
+        global $kernel;
+        /* @var $kernel \AppKernel */
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav');
         
+        $menumenu =  $kernel->getContainer()->get("rraven.helper.menumenu");
+        /* @var $menumenu \RRaven\Bundle\LaughingbearBundle\Helper\MenuMenuHelper */
+        $menu_array = $menumenu->sniffMenus();
+        
+        
+        
+        
+        
         $dropdown = $this->createDropdownMenuItem($menu, "More");
         $dropdown->addChild("buzztest", array("route" => "rraven_laughingbear_default_buzztest"));
+        
+        $dropdown_two = $this->createDropdownMenuItem($dropdown, "Dropdown");
+        $dropdown_two->addChild("anothertest", array("route" => "rraven_laughingbear_default_buzztest"));
 
         //$menu->addChild('Shipdev', array('route' => 'shipdev'));
 

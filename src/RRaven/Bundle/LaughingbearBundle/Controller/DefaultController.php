@@ -138,6 +138,7 @@ class DefaultController extends LaughingbearController
      * @Secure(roles="ROLE_USER")
      * @Menu\Item(name="Test", path={"Debug", "Github"}, before="@rraven_laughingbear_default_listrepos")
      * @Menu\Menu(name="Github", path={"Debug"}, before="@rraven_laughingbear_default_buzztest")
+     * @Menu\Menu(name="Empty", path={"Debug"})
      */
     public function testAction()
     {
