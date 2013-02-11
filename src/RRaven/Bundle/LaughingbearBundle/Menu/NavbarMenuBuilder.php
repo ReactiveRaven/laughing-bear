@@ -18,6 +18,29 @@ class NavbarMenuBuilder extends AbstractNavbarMenuBuilder
         $this->securityContext = $securityContext;
         $this->isLoggedIn = $this->securityContext->isGranted('IS_AUTHENTICATED_FULLY');
     }
+    
+    /**
+     * 
+     * @param MenuItem $root
+     * @param array $array
+     * @param boolean $isRoot
+     */
+    private function arrayToMenu($root, $array, $isRoot = true) {
+      foreach ($array as $key => $value) {
+        if (is_array($value)) {
+          if ($isRoot) {
+            $item = $this->createDropdownMenuItem($root, $key, false);
+            $this->arrayToMenu($item, $value, false);
+          } else {
+            $item = $this->createSubDropdownMenuItem($root, $key, false);
+            $this->arrayToMenu($item, $value, false);
+          }
+        } else {
+          $root->addChild($key, array("route" => str_replace("@", "", $value)));
+        }
+      }
+      return $root;
+    }
 
     public function createMainMenu(Request $request)
     {
@@ -30,15 +53,14 @@ class NavbarMenuBuilder extends AbstractNavbarMenuBuilder
         /* @var $menumenu \RRaven\Bundle\LaughingbearBundle\Helper\MenuMenuHelper */
         $menu_array = $menumenu->sniffMenus();
         
+        $this->arrayToMenu($menu, $menu_array);
         
         
-        
-        
-        $dropdown = $this->createDropdownMenuItem($menu, "More");
-        $dropdown->addChild("buzztest", array("route" => "rraven_laughingbear_default_buzztest"));
-        
-        $dropdown_two = $this->createDropdownMenuItem($dropdown, "Dropdown");
-        $dropdown_two->addChild("anothertest", array("route" => "rraven_laughingbear_default_buzztest"));
+//        $dropdown = $this->createDropdownMenuItem($menu, "More", false);
+//        $dropdown->addChild("buzztest", array("route" => "rraven_laughingbear_default_buzztest"));
+//        
+//        $dropdown_two = $this->createSubDropdownMenuItem($dropdown, "Dropdown", false);
+//        $dropdown_two->addChild("anothertest", array("route" => "rraven_laughingbear_default_buzztest"));
 
         //$menu->addChild('Shipdev', array('route' => 'shipdev'));
 
@@ -47,6 +69,29 @@ class NavbarMenuBuilder extends AbstractNavbarMenuBuilder
 //        $dropdown->addChild('Schiffs-XP', array('route' => 'rraven_laughingbear_default_buzztest'));
 
         return $menu;
+    }
+    
+    private function createSubDropdownMenuItem($rootItem, $title, $push_right = true, $icon = array(), $knp_item_options = array()) {
+              $rootItem
+            ->setAttribute('class', 'nav')
+        ;
+        if ($push_right) {
+            $this->pushRight($rootItem);
+        }
+        $dropdown = $rootItem->addChild($title, array_merge($knp_item_options, array('uri'=>'#')))
+            ->setLinkattribute('class', 'dropdown-toggle')
+            ->setLinkattribute('data-toggle', 'dropdown')
+            ->setAttribute('class', 'dropdown')
+            ->setChildrenAttribute('class', 'dropdown-menu sub-menu')
+        ;
+        // TODO: make XSS safe $icon contents escaping
+        if (isset($icon['icon'])) {
+            $icon = array_merge(array('tag'=>'i'), $icon);
+            $dropdown->setLabel($title. ' <'.$icon['tag'].' class="'.$icon['icon'].'"></'.$icon['tag'].'>')
+                     ->setExtra('safe_label', true);
+        }
+
+        return $dropdown;
     }
 
     public function createRightSideDropdownMenu(Request $request)
