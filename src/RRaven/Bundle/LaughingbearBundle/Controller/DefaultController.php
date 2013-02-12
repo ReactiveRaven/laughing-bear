@@ -2,6 +2,7 @@
 
 namespace RRaven\Bundle\LaughingbearBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -24,17 +25,12 @@ class DefaultController extends LaughingbearController
     
     /**
      * @Route("/")
-     * @Template()
      */
     public function indexAction()
     {
-        $name = null;
-        
-        if ($this->getUser()) {
-            $name = $this->getUser()->getUsername();
-        }
-        
-        return array('name' => $name);
+        $response = new Response();
+        $response->setSharedMaxAge(3600);
+        return $this->render("RRavenLaughingbearBundle:Default:index.html.twig", array("name" => null), $response);
     }
     
     /**

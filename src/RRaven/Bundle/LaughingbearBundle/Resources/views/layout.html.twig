@@ -7,6 +7,7 @@
     {% stylesheets
         '@RRavenLaughingbearBundle/Resources/public/darkstrap/darkstrap.css'
         '@RRavenLaughingbearBundle/Resources/public/css/bootstrap-multi-menu.css'
+        filter="?yui_css"
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
@@ -31,8 +32,9 @@
         '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-typeahead.js'
         '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
         '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
+        filter="?yui_js"
     %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
+<script type="text/javascript" src="{{ asset_url }}" defer="defer"></script>
 {% endjavascripts %}
 {% endblock %}
 
