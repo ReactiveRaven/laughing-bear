@@ -5,19 +5,27 @@ namespace RRaven\Bundle\LaughingbearBundle\Helper;
 use RRaven\Bundle\LaughingbearBundle\Annotations\Menu\Menu as MenuMenu;
 use RRaven\Bundle\LaughingbearBundle\Annotations\Menu\Item as MenuItem;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use RRaven\Bundle\LaughingbearBundle\Utility\CG\Proxy\FakeMethodInvocation;
+use CG\Proxy\MethodInterceptorInterface;
+use Symfony\Component\Routing\RouterInterface;
+
+use Doctrine\Common\Annotations\Reader as AnnotationReaderInterface;
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class MenuMenuHelper
 {
 
     private $_annotation_reader = null;
     private $_logger = null;
-    private $_container = null;
+    private $_router = null;
+    private $_security_interceptor = null;
 
-    public function __construct($annotation_reader, $logger, $container)
+    public function __construct(AnnotationReaderInterface $annotation_reader, LoggerInterface $logger, RouterInterface $router, MethodInterceptorInterface $securityInterceptor)
     {
         $this->_annotation_reader = $annotation_reader;
         $this->_logger = $logger;
-        $this->_container = $container;
+        $this->_router = $router;
+        $this->_security_interceptor = $securityInterceptor;
     }
 
     /**
@@ -52,9 +60,7 @@ class MenuMenuHelper
         $menu_items = array();
         $menu_menus = array();
 
-        $router = $this->_container->get("router");
-        /* @var $router \Symfony\Bundle\FrameworkBundle\Routing\Router */
-        $routes = $router->getRouteCollection()->all();
+        $routes = $this->_router->getRouteCollection()->all();
 
         $annotation_reader = $this->getAnnotationReader();
 
@@ -68,16 +74,25 @@ class MenuMenuHelper
 
                 $reflectionClass = new \ReflectionClass($class);
                 $reflectionMethod = $reflectionClass->getMethod($method);
+                
+                try
+                {
+                    $fakeInvocation = new FakeMethodInvocation($reflectionMethod, $reflectionClass, array(), array($this->_security_interceptor));
+                    $fakeInvocation->proceed();
+                    
+                    $methodAnnotations = $annotation_reader->getMethodAnnotations($reflectionMethod);
 
-                $methodAnnotations = $annotation_reader->getMethodAnnotations($reflectionMethod);
-
-                foreach ($methodAnnotations as $annotation) {
-                    if ($annotation instanceof MenuItem) {
-                        $annotation->setRoute("@" . $route_name);
-                        $menu_items[] = $annotation;
-                    } else if ($annotation instanceof MenuMenu) {
-                        $menu_menus[] = $annotation;
+                    foreach ($methodAnnotations as $annotation) {
+                        if ($annotation instanceof MenuItem) {
+                            $annotation->setRoute("@" . $route_name);
+                            $menu_items[] = $annotation;
+                        } else if ($annotation instanceof MenuMenu) {
+                            $menu_menus[] = $annotation;
+                        }
                     }
+                }
+                catch (\Exception $E) {
+                    $E = $E;
                 }
             }
         }

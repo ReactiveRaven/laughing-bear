@@ -41,7 +41,7 @@ class DefaultController extends LaughingbearController
      * @Route("/buzztest")
      * @Template()
      * @Secure(roles="ROLE_USER")
-     * @Menu\Item(name="Buzz Test", path={"Debug"})
+     * @Menu\Item(name="Buzz Test", path={"Debug", "Github"})
      */
     public function buzzTestAction()
     {
@@ -135,10 +135,9 @@ class DefaultController extends LaughingbearController
     /**
      * @Route("/test")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_ADMIN")
      * @Menu\Item(name="Test", path={"Debug", "Github"}, before="@rraven_laughingbear_default_listrepos")
      * @Menu\Menu(name="Github", path={"Debug"}, before="@rraven_laughingbear_default_buzztest")
-     * @Menu\Menu(name="Empty", path={"Debug"})
      */
     public function testAction()
     {
@@ -226,7 +225,7 @@ class DefaultController extends LaughingbearController
             }
             $issues[$repo]["TOTALMINUTES"] = $grandtotal;
         }
-
+        
         return
             array(
                 "response" => $this->prettifyJson(json_encode(array("results" => $results, "issues" => $issues)))

@@ -5,10 +5,5 @@
 {% block content_header '' %}
 
 {% block content %}
-    Hello {% if name %}{{ name }}{% else %}there{% endif %}!<br />
-    {% if name %}
-      <a href="{{ path('fos_user_security_logout') }}">Log out</a>
-    {% else %}
-      <a href="{{ path('hwi_oauth_connect') }}">Log in</a>
-    {% endif %}
+    Hello {% if name %}{{ name }}{% else %}there{% endif %}!
 {% endblock %}

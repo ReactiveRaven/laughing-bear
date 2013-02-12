@@ -26,14 +26,17 @@ class NavbarMenuBuilder extends AbstractNavbarMenuBuilder
      * @param boolean $isRoot
      */
     private function arrayToMenu($root, $array, $isRoot = true) {
+        //var_dump($array);die();
       foreach ($array as $key => $value) {
         if (is_array($value)) {
-          if ($isRoot) {
-            $item = $this->createDropdownMenuItem($root, $key, false);
-            $this->arrayToMenu($item, $value, false);
-          } else {
-            $item = $this->createSubDropdownMenuItem($root, $key, false);
-            $this->arrayToMenu($item, $value, false);
+          if (count($value)) {
+            if ($isRoot) {
+              $item = $this->createDropdownMenuItem($root, $key, false);
+              $this->arrayToMenu($item, $value, false);
+            } else {
+              $item = $this->createSubDropdownMenuItem($root, $key, false);
+              $this->arrayToMenu($item, $value, false);
+            }
           }
         } else {
           $root->addChild($key, array("route" => str_replace("@", "", $value)));
@@ -72,7 +75,7 @@ class NavbarMenuBuilder extends AbstractNavbarMenuBuilder
     }
     
     private function createSubDropdownMenuItem($rootItem, $title, $push_right = true, $icon = array(), $knp_item_options = array()) {
-              $rootItem
+        $rootItem
             ->setAttribute('class', 'nav')
         ;
         if ($push_right) {

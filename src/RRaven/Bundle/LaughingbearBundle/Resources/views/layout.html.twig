@@ -36,8 +36,9 @@
 {% endjavascripts %}
 {% endblock %}
 
+{% block navbar %}{% render url('esi_menus_top', { }) with {}, {'standalone': true} %}{% endblock navbar %}
+
 {% block container %}
-    {% block navbar %}{{ mopa_bootstrap_navbar('frontendNavbar') }}{% endblock navbar %}
     <br /><br /><br />
     <div class="container">
         {% block content %}
