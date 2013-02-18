@@ -5,8 +5,13 @@
 {% block content_header '' %}
 
 {% block content %}
+{% render url('esi_repos_list', { }) with {}, {'standalone': true} %}
 
-<pre>
-{{ json }}
-</pre>
+<style>
+    .repolist .private
+    {
+        color: hsl(48, 61%, 78%);
+    }
+</style>
+
 {% endblock %}

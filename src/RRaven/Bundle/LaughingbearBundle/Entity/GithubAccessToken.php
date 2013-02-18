@@ -32,7 +32,7 @@ class GithubAccessToken extends AbstractContainerAwareEntity {
   protected $rateLimit;
 
   /**
-   * @ORM\OneToOne(targetEntity="GithubUser", fetch="LAZY", inversedBy="accessToken")
+   * @ORM\OneToOne(targetEntity="GithubUser", fetch="LAZY", mappedBy="accessToken")
    */
   protected $user;
 	

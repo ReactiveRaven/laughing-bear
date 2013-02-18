@@ -41,7 +41,7 @@ class GithubRepositoryPermissions {
 		protected $user;
 		
 		/**
-		 * @ORM\ManyToOne(targetEntity="GithubRepository", fetch="EAGER")
+		 * @ORM\ManyToOne(targetEntity="GithubRepository", fetch="EAGER", inversedBy="permissions")
 		 */
 		protected $repository;
 		

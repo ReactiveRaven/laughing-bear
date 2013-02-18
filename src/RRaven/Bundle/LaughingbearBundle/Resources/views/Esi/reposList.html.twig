@@ -1,0 +1,16 @@
+<ul class="repolist">
+    {% for owner, repos in repolist %}
+        <li class="owner">{{ owner }}
+            <ul>
+            {% for repo in repos %}
+                <li class="{% if repo.private %}private {% endif %}">
+                    {% if repo.private %}
+                        <i class="icon-lock icon icon-private"></i>
+                    {% endif %}
+                    {{repo.name}}
+                </li>
+            {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>

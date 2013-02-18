@@ -7,6 +7,7 @@
     {% stylesheets
         '@RRavenLaughingbearBundle/Resources/public/darkstrap/darkstrap.css'
         '@RRavenLaughingbearBundle/Resources/public/css/bootstrap-multi-menu.css'
+        'bundles/bmatznerfontawesome/css/font-awesome.css'
         filter="?yui_css"
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
@@ -14,28 +15,14 @@
 {% endblock %}
 
 {% block foot_script %}
-{# parent() #}
+    {{ parent() }}
 
     {% javascripts
         '@RRavenLaughingbearBundle/Resources/public/js/jquery.1.7.1.min.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-transition.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-modal.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-dropdown.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-scrollspy.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-tab.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-tooltip.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-popover.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-alert.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-button.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-collapse.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-carousel.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-typeahead.js'
-        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
-        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
         filter="?yui_js"
     %}
-<script type="text/javascript" src="{{ asset_url }}" defer="defer"></script>
-{% endjavascripts %}
+        <script type="text/javascript" src="{{ asset_url }}" defer="defer"></script>
+    {% endjavascripts %}
 {% endblock %}
 
 {% block navbar %}{% render url('esi_menus_top', { }) with {}, {'standalone': true} %}{% endblock navbar %}

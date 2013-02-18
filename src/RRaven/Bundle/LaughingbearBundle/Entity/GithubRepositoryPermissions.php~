@@ -1,9 +1,9 @@
 <?php
 
-namespace RRaven\Bundle\GitpanelBundle\Entity;
+namespace RRaven\Bundle\LaughingbearBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use RRaven\Bundle\GitpanelBundle\Annotations\Api;
+use RRaven\Bundle\LaughingbearBundle\Annotations\Api;
 
 /**
  * @ORM\Entity
@@ -41,12 +41,12 @@ class GithubRepositoryPermissions {
 		protected $user;
 		
 		/**
-		 * @ORM\ManyToOne(targetEntity="GithubRepository", fetch="EAGER")
+		 * @ORM\ManyToOne(targetEntity="GithubRepository", fetch="EAGER", inversedBy="permissions")
 		 */
 		protected $repository;
 		
 		/**
-		 * @return \RRaven\Bundle\GitpanelBundle\Entity\GithubRepositoryPermissions
+		 * @return \RRaven\Bundle\LaughingbearBundle\Entity\GithubRepositoryPermissions
 		 */
 		public static function manufacture()
 		{
@@ -154,10 +154,10 @@ class GithubRepositoryPermissions {
     /**
      * Set repository
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $repository
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $repository
      * @return GithubRepositoryPermissions
      */
-    public function setRepository(\RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $repository = null)
+    public function setRepository(\RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $repository = null)
     {
         $this->repository = $repository;
         return $this;
@@ -166,7 +166,7 @@ class GithubRepositoryPermissions {
     /**
      * Get repository
      *
-     * @return RRaven\Bundle\GitpanelBundle\Entity\GithubRepository 
+     * @return RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository 
      */
     public function getRepository()
     {

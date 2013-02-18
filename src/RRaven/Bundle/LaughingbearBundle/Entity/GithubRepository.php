@@ -7,7 +7,7 @@ use RRaven\Bundle\LaughingbearBundle\Annotations\Api;
 
 /**
  * @ORM\Entity 
- * @ORM\Table(indexes={@ORM\Index(name="full_name_idx", columns={"full_name"})})
+ * @ORM\Table(name="GithubRepository", indexes={@ORM\Index(name="full_name_idx", columns={"full_name"})})
 */
 class GithubRepository
 {
@@ -18,213 +18,213 @@ class GithubRepository
      */
     protected $id;
 				
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"id"})
-		 */
-		protected $github_id;
-		
-		/**
-		 * @ORM\Column(type="datetime")
-		 * @Api\Map(keys={"pushed_at"})
-		 */
-		protected $pushed_at;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"forks"})
-		 */
-		protected $forks;
-		
-		/**
-		 * @ORM\Column(type="boolean")
-		 * @Api\Map(keys={"has_issues"})
-		 */
-		protected $has_issues;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"full_name"})
-		 */
-		protected $full_name;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"forks_count"})
-		 */
-		protected $forks_count;
-		
-		/**
-		 * @ORM\Column(type="boolean")
-		 * @Api\Map(keys={"has_downloads"})
-		 */
-		protected $has_downloads;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"svn_url"})
-		 */
-		protected $svn_url;
-		
-		/**
-		 * @ORM\Column(type="string", length=500, nullable=true)
-		 * @Api\Map(keys={"mirror_url"})
-		 */
-		protected $mirror_url;
-		
-		/**
-		 * @ORM\Column(type="string", length=500, nullable=true)
-		 * @Api\Map(keys={"homepage"})
-		 */
-		protected $homepage;
-		
-		/**
-		 * @ORM\ManyToOne(targetEntity="GithubUser", fetch="LAZY")
-         * @Api\Link(url = "owner/url", id = "owner/id", target = "github_id", required = "true", auto_import = "true")
-		 */
-		protected $user;
-		
-		/**
-		 * @ORM\ManyToOne(targetEntity="GithubRepository", inversedBy="child_repositories", fetch="LAZY")
-         * @Api\Link(url = "parent/url", id = "parent/id", target = "github_id", required = "true", auto_import = "true")
-		 */
-		protected $parent;
-		
-		/**
-		 * @ORM\OneToMany(targetEntity="GithubRepository", mappedBy="parent_repository", fetch="LAZY")
-		 */
-		protected $child_repositories;
-		
-		/**
-		 * @ORM\ManyToOne(targetEntity="GithubRepository", inversedBy="forked_repositories", fetch="LAZY")
-         * @Api\Link(url = "source/url", id = "source/id", target = "github_id", required = "true", auto_import = "true")
-		 */
-		protected $source;
-		
-		/**
-		 * @ORM\OneToMany(targetEntity="GithubRepository", mappedBy="source_repository", fetch="LAZY")
-		 */
-		protected $forked_repositories;
-		
-		/**
-		 * @ORM\ManyToOne(targetEntity="GithubOrganization", inversedBy="repositories", fetch="LAZY")
-     * @Api\Link(url = "organization/url", id = "organization/id", target = "github_id", required = "true", auto_import = "true")
-		 */
-		protected $organization;
-		
-		/**
-		 * @ORM\OneToMany(targetEntity="GithubRepositoryPermissions", fetch="LAZY", mappedBy="repository")
-         * @Api\Apply(key="permissions")
-		 */
-		protected $permissions;
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"id"})
+     */
+    protected $github_id;
 
-		/**
-		 * @ORM\Column(type="string", length=255, nullable=true)
-		 * @Api\Map(keys={"language"})
-		 */
-		protected $language;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"git_url"})
-		 */
-		protected $git_url;
-		
-		/**
-		 * @ORM\Column(type="datetime")
-		 * @Api\Map(keys={"created_at"})
-		 */
-		protected $created_at;
-		
-		/**
-		 * @ORM\Column(type="boolean")
-		 * @Api\Map(keys={"has_wiki"})
-		 */
-		protected $has_wiki;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"size"})
-		 */
-		protected $size;
-		
-		/**
-		 * @ORM\Column(type="boolean")
-		 * @Api\Map(keys={"fork"})
-		 */
-		protected $fork;
-		
-		/**
-		 * @ORM\Column(type="string", length=500, nullable=true)
-		 * @Api\Map(keys={"description"})
-		 */
-		protected $description;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"clone_url"})
-		 */
-		protected $clone_url;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"html_url"})
-		 */
-		protected $html_url;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"watchers"})
-		 */
-		protected $watchers;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"watchers_count"})
-		 */
-		protected $watchers_count;
-		
-		/**
-		 * @ORM\Column(name="`name`", type="string", length=255)
-		 * @Api\Map(keys={"name"})
-		 */
-		protected $name;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"url"})
-		 */
-		protected $url;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"ssh_url"})
-		 */
-		protected $ssh_url;
-		
-		/**
-		 * @ORM\Column(type="boolean")
-		 * @Api\Map(keys={"private"})
-		 */
-		protected $private;
-		
-		/**
-		 * @ORM\Column(type="datetime")
-		 * @Api\Map(keys={"updated_at"})
-		 */
-		protected $updated_at;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"open_issues"})
-		 */
-		protected $open_issues;
-		
-		/**
-		 * @ORM\Column(type="integer", nullable=true)
-		 * @Api\Map(keys={"open_issues_count"})
-		 */
-		protected $open_issues_count;
+    /**
+     * @ORM\Column(type="datetime")
+     * @Api\Map(keys={"pushed_at"})
+     */
+    protected $pushed_at;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"forks"})
+     */
+    protected $forks;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Api\Map(keys={"has_issues"})
+     */
+    protected $has_issues;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"full_name"})
+     */
+    protected $full_name;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"forks_count"})
+     */
+    protected $forks_count;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Api\Map(keys={"has_downloads"})
+     */
+    protected $has_downloads;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"svn_url"})
+     */
+    protected $svn_url;
+
+    /**
+     * @ORM\Column(type="string", length=500, nullable=true)
+     * @Api\Map(keys={"mirror_url"})
+     */
+    protected $mirror_url;
+
+    /**
+     * @ORM\Column(type="string", length=500, nullable=true)
+     * @Api\Map(keys={"homepage"})
+     */
+    protected $homepage;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GithubUser", fetch="LAZY", inversedBy="repositories")
+     * @Api\Link(url = "owner/url", id = "owner/id", target = "github_id", required = "true", auto_import = "true")
+     */
+    protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GithubRepository", inversedBy="child_repositories", fetch="LAZY")
+     * @Api\Link(url = "parent/url", id = "parent/id", target = "github_id", required = "true", auto_import = "true")
+     */
+    protected $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GithubRepository", mappedBy="parent", fetch="LAZY")
+     */
+    protected $child_repositories;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GithubRepository", inversedBy="forked_repositories", fetch="LAZY")
+     * @Api\Link(url = "source/url", id = "source/id", target = "github_id", required = "true", auto_import = "true")
+     */
+    protected $source;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GithubRepository", mappedBy="source", fetch="LAZY")
+     */
+    protected $forked_repositories;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GithubOrganization", inversedBy="repositories")
+     * @Api\Link(url = "organization/url", id = "organization/id", target = "github_id", required = "true", auto_import = "true")
+     */
+    protected $organization;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GithubRepositoryPermissions", fetch="LAZY", mappedBy="repository")
+     * @Api\Apply(key="permissions")
+     */
+    protected $permissions;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Api\Map(keys={"language"})
+     */
+    protected $language;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"git_url"})
+     */
+    protected $git_url;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Api\Map(keys={"created_at"})
+     */
+    protected $created_at;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Api\Map(keys={"has_wiki"})
+     */
+    protected $has_wiki;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"size"})
+     */
+    protected $size;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Api\Map(keys={"fork"})
+     */
+    protected $fork;
+
+    /**
+     * @ORM\Column(type="string", length=500, nullable=true)
+     * @Api\Map(keys={"description"})
+     */
+    protected $description;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"clone_url"})
+     */
+    protected $clone_url;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"html_url"})
+     */
+    protected $html_url;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"watchers"})
+     */
+    protected $watchers;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"watchers_count"})
+     */
+    protected $watchers_count;
+
+    /**
+     * @ORM\Column(name="`name`", type="string", length=255)
+     * @Api\Map(keys={"name"})
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"url"})
+     */
+    protected $url;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"ssh_url"})
+     */
+    protected $ssh_url;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Api\Map(keys={"private"})
+     */
+    protected $private;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Api\Map(keys={"updated_at"})
+     */
+    protected $updated_at;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"open_issues"})
+     */
+    protected $open_issues;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Api\Map(keys={"open_issues_count"})
+     */
+    protected $open_issues_count;
     
     /**
      * Manufacture an instance

@@ -19,7 +19,7 @@ class GithubRateLimit extends AbstractContainerAwareEntity {
 	protected $id;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="GithubAccessToken", fetch="LAZY", inversedBy="rateLimit")
+	 * @ORM\OneToOne(targetEntity="GithubAccessToken", fetch="LAZY", mappedBy="rateLimit")
 	 */
 	protected $accessToken;
 
@@ -98,7 +98,7 @@ class GithubRateLimit extends AbstractContainerAwareEntity {
 	 * 
 	 */
 	public function forceUpdateFromApi() {
-		$browser = $this->getContainer()->get('buzz')->getBrowser('default');
+		$browser = $this->getContainer()->get('rraven.buzz.github');
 		
 		if (!$this->getAccessToken()) {
 			throw new \InvalidArgumentException("No AccessToken set for this RateLimit");

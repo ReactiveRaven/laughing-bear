@@ -123,3 +123,9 @@ sonata_block:
 
 mopa_bootstrap:
     navbar: ~
+
+stof_doctrine_extensions:
+    default_locale: en_GB
+    orm:
+        default:
+            timestampable: true

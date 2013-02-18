@@ -1,10 +1,10 @@
 <?php
 
-namespace RRaven\Bundle\GitpanelBundle\Entity;
+namespace RRaven\Bundle\LaughingbearBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
 		DateTime,
-		RRaven\Bundle\GitpanelBundle\Annotations\Api;
+		RRaven\Bundle\LaughingbearBundle\Annotations\Api;
 
 /**
  * @ORM\Entity
@@ -19,7 +19,7 @@ class GithubRateLimit extends AbstractContainerAwareEntity {
 	protected $id;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="GithubAccessToken", fetch="LAZY", inversedBy="rateLimit")
+	 * @ORM\OneToOne(targetEntity="GithubAccessToken", fetch="LAZY", mappedBy="rateLimit")
 	 */
 	protected $accessToken;
 
@@ -77,7 +77,7 @@ class GithubRateLimit extends AbstractContainerAwareEntity {
 	}
 	
 	/**
-	 * @return \RRaven\Bundle\GitpanelBundle\Helper\ApiMapHelper
+	 * @return \RRaven\Bundle\LaughingbearBundle\Helper\ApiMapHelper
 	 */
 	private function getApiMapHelper()
 	{
@@ -98,7 +98,7 @@ class GithubRateLimit extends AbstractContainerAwareEntity {
 	 * 
 	 */
 	public function forceUpdateFromApi() {
-		$browser = $this->getContainer()->get('buzz')->getBrowser('default');
+		$browser = $this->getContainer()->get('rraven.buzz.github');
 		
 		if (!$this->getAccessToken()) {
 			throw new \InvalidArgumentException("No AccessToken set for this RateLimit");

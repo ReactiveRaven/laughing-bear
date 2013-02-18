@@ -5,7 +5,7 @@
 {% block content_header '' %}
 
 {% block content %}
-
+<h1>Hello {% render url('esi_user_username', { }) with {}, {'standalone': true} %}</h1>
 <pre>
 {{ json }}
 </pre>

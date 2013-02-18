@@ -1,14 +1,14 @@
 <?php
 
-namespace RRaven\Bundle\GitpanelBundle\Entity;
+namespace RRaven\Bundle\LaughingbearBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use RRaven\Bundle\GitpanelBundle\Annotations\Api;
+use RRaven\Bundle\LaughingbearBundle\Annotations\Api;
 
 use \DateTime;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="RRaven\Bundle\LaughingbearBundle\Entity\GithubUserRepository")
  */
 class GithubUser
 {
@@ -139,14 +139,19 @@ class GithubUser
      */
     protected $accessToken;
 		
-		/**
-		 * @ORM\OneToMany(targetEntity="GithubRepository", fetch="LAZY", mappedBy="user")
-		 */
-		protected $repositories;
+    /**
+     * @ORM\OneToMany(targetEntity="GithubRepository", fetch="LAZY", mappedBy="user")
+     */
+    protected $repositories;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="GithubOrganization", mappedBy="members")
+     */
+    protected $organizations;
     
     /**
      * Manufacture an instance
-     * @return \RRaven\Bundle\GitpanelBundle\Entity\GithubUser
+     * @return \RRaven\Bundle\LaughingbearBundle\Entity\GithubUser
      */
     public static function manufacture()
     {
@@ -589,10 +594,10 @@ class GithubUser
     /**
      * Set accessToken
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubAccessToken $accessToken
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubAccessToken $accessToken
      * @return GithubUser
      */
-    public function setAccessToken(\RRaven\Bundle\GitpanelBundle\Entity\GithubAccessToken $accessToken = null)
+    public function setAccessToken(\RRaven\Bundle\LaughingbearBundle\Entity\GithubAccessToken $accessToken = null)
     {
         $this->accessToken = $accessToken;
         return $this;
@@ -601,7 +606,7 @@ class GithubUser
     /**
      * Get accessToken
      *
-     * @return RRaven\Bundle\GitpanelBundle\Entity\GithubAccessToken 
+     * @return RRaven\Bundle\LaughingbearBundle\Entity\GithubAccessToken 
      */
     public function getAccessToken()
     {
@@ -611,10 +616,10 @@ class GithubUser
     /**
      * Add repositories
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $repositories
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $repositories
      * @return GithubUser
      */
-    public function addRepositorie(\RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $repositories)
+    public function addRepositorie(\RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $repositories)
     {
         $this->repositories[] = $repositories;
         return $this;
@@ -623,9 +628,9 @@ class GithubUser
     /**
      * Remove repositories
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $repositories
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $repositories
      */
-    public function removeRepositorie(\RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $repositories)
+    public function removeRepositorie(\RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $repositories)
     {
         $this->repositories->removeElement($repositories);
     }
@@ -638,5 +643,38 @@ class GithubUser
     public function getRepositories()
     {
         return $this->repositories;
+    }
+
+    /**
+     * Add organizations
+     *
+     * @param \RRaven\Bundle\LaughingbearBundle\Entity\GithubOrganization $organizations
+     * @return GithubUser
+     */
+    public function addOrganization(\RRaven\Bundle\LaughingbearBundle\Entity\GithubOrganization $organizations)
+    {
+        $this->organizations[] = $organizations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove organizations
+     *
+     * @param \RRaven\Bundle\LaughingbearBundle\Entity\GithubOrganization $organizations
+     */
+    public function removeOrganization(\RRaven\Bundle\LaughingbearBundle\Entity\GithubOrganization $organizations)
+    {
+        $this->organizations->removeElement($organizations);
+    }
+
+    /**
+     * Get organizations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrganizations()
+    {
+        return $this->organizations;
     }
 }

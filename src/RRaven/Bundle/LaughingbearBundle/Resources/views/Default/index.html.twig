@@ -1,9 +1,9 @@
 {% extends 'RRavenLaughingbearBundle::layout.html.twig' %}
 
-{% block title %}Hello {{ name}}{% endblock %}
+{% block title %}Hello {% render url('esi_user_username', { }) with {}, {'standalone': true} %}{% endblock %}
 
 {% block content_header '' %}
 
 {% block content %}
-    Hello {% if name %}{{ name }}{% else %}there{% endif %}!
+Hello {% render url('esi_user_username', { }) with {}, {'standalone': true} %}!
 {% endblock %}

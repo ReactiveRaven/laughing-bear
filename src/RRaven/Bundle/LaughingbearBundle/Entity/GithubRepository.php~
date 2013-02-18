@@ -1,12 +1,13 @@
 <?php
 
-namespace RRaven\Bundle\GitpanelBundle\Entity;
+namespace RRaven\Bundle\LaughingbearBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use RRaven\Bundle\GitpanelBundle\Annotations\Api;
+use RRaven\Bundle\LaughingbearBundle\Annotations\Api;
 
 /**
  * @ORM\Entity 
+ * @ORM\Table(name="GithubRepository", indexes={@ORM\Index(name="full_name_idx", columns={"full_name"})})
 */
 class GithubRepository
 {
@@ -17,217 +18,217 @@ class GithubRepository
      */
     protected $id;
 				
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"id"})
-		 */
-		protected $github_id;
-		
-		/**
-		 * @ORM\Column(type="datetime")
-		 * @Api\Map(keys={"pushed_at"})
-		 */
-		protected $pushed_at;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"forks"})
-		 */
-		protected $forks;
-		
-		/**
-		 * @ORM\Column(type="boolean")
-		 * @Api\Map(keys={"has_issues"})
-		 */
-		protected $has_issues;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"full_name"})
-		 */
-		protected $full_name;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"forks_count"})
-		 */
-		protected $forks_count;
-		
-		/**
-		 * @ORM\Column(type="boolean")
-		 * @Api\Map(keys={"has_downloads"})
-		 */
-		protected $has_downloads;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"svn_url"})
-		 */
-		protected $svn_url;
-		
-		/**
-		 * @ORM\Column(type="string", length=500, nullable=true)
-		 * @Api\Map(keys={"mirror_url"})
-		 */
-		protected $mirror_url;
-		
-		/**
-		 * @ORM\Column(type="string", length=500, nullable=true)
-		 * @Api\Map(keys={"homepage"})
-		 */
-		protected $homepage;
-		
-		/**
-		 * @ORM\ManyToOne(targetEntity="GithubUser", fetch="LAZY")
-         * @Api\Link(url = "owner/url", id = "owner/id", target = "github_id", required = "true", auto_import = "true")
-		 */
-		protected $user;
-		
-		/**
-		 * @ORM\ManyToOne(targetEntity="GithubRepository", inversedBy="child_repositories", fetch="LAZY")
-         * @Api\Link(url = "parent/url", id = "parent/id", target = "github_id", required = "true", auto_import = "true")
-		 */
-		protected $parent;
-		
-		/**
-		 * @ORM\OneToMany(targetEntity="GithubRepository", mappedBy="parent_repository", fetch="LAZY")
-		 */
-		protected $child_repositories;
-		
-		/**
-		 * @ORM\ManyToOne(targetEntity="GithubRepository", inversedBy="forked_repositories", fetch="LAZY")
-         * @Api\Link(url = "source/url", id = "source/id", target = "github_id", required = "true", auto_import = "true")
-		 */
-		protected $source;
-		
-		/**
-		 * @ORM\OneToMany(targetEntity="GithubRepository", mappedBy="source_repository", fetch="LAZY")
-		 */
-		protected $forked_repositories;
-		
-		/**
-		 * @ORM\ManyToOne(targetEntity="GithubOrganization", inversedBy="repositories", fetch="LAZY")
-         * @Api\Link(url = "organization/url", id = "organization/id", target = "github_id", required = "true", auto_import = "true")
-		 */
-		protected $organization;
-		
-		/**
-		 * @ORM\OneToMany(targetEntity="GithubRepositoryPermissions", fetch="LAZY", mappedBy="repository")
-         * @Api\Apply(key="permissions")
-		 */
-		protected $permissions;
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"id"})
+     */
+    protected $github_id;
 
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"language"})
-		 */
-		protected $language;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"git_url"})
-		 */
-		protected $git_url;
-		
-		/**
-		 * @ORM\Column(type="datetime")
-		 * @Api\Map(keys={"created_at"})
-		 */
-		protected $created_at;
-		
-		/**
-		 * @ORM\Column(type="boolean")
-		 * @Api\Map(keys={"has_wiki"})
-		 */
-		protected $has_wiki;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"size"})
-		 */
-		protected $size;
-		
-		/**
-		 * @ORM\Column(type="boolean")
-		 * @Api\Map(keys={"fork"})
-		 */
-		protected $fork;
-		
-		/**
-		 * @ORM\Column(type="string", length=500, nullable=true)
-		 * @Api\Map(keys={"description"})
-		 */
-		protected $description;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"clone_url"})
-		 */
-		protected $clone_url;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"html_url"})
-		 */
-		protected $html_url;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"watchers"})
-		 */
-		protected $watchers;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"watchers_count"})
-		 */
-		protected $watchers_count;
-		
-		/**
-		 * @ORM\Column(name="`name`", type="string", length=255)
-		 * @Api\Map(keys={"name"})
-		 */
-		protected $name;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"url"})
-		 */
-		protected $url;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"ssh_url"})
-		 */
-		protected $ssh_url;
-		
-		/**
-		 * @ORM\Column(type="boolean")
-		 * @Api\Map(keys={"private"})
-		 */
-		protected $private;
-		
-		/**
-		 * @ORM\Column(type="datetime")
-		 * @Api\Map(keys={"updated_at"})
-		 */
-		protected $updated_at;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"open_issues"})
-		 */
-		protected $open_issues;
-		
-		/**
-		 * @ORM\Column(type="integer", nullable=true)
-		 * @Api\Map(keys={"open_issues_count"})
-		 */
-		protected $open_issues_count;
+    /**
+     * @ORM\Column(type="datetime")
+     * @Api\Map(keys={"pushed_at"})
+     */
+    protected $pushed_at;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"forks"})
+     */
+    protected $forks;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Api\Map(keys={"has_issues"})
+     */
+    protected $has_issues;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"full_name"})
+     */
+    protected $full_name;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"forks_count"})
+     */
+    protected $forks_count;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Api\Map(keys={"has_downloads"})
+     */
+    protected $has_downloads;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"svn_url"})
+     */
+    protected $svn_url;
+
+    /**
+     * @ORM\Column(type="string", length=500, nullable=true)
+     * @Api\Map(keys={"mirror_url"})
+     */
+    protected $mirror_url;
+
+    /**
+     * @ORM\Column(type="string", length=500, nullable=true)
+     * @Api\Map(keys={"homepage"})
+     */
+    protected $homepage;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GithubUser", fetch="LAZY", inversedBy="repositories")
+     * @Api\Link(url = "owner/url", id = "owner/id", target = "github_id", required = "true", auto_import = "true")
+     */
+    protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GithubRepository", inversedBy="child_repositories", fetch="LAZY")
+     * @Api\Link(url = "parent/url", id = "parent/id", target = "github_id", required = "true", auto_import = "true")
+     */
+    protected $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GithubRepository", mappedBy="parent", fetch="LAZY")
+     */
+    protected $child_repositories;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GithubRepository", inversedBy="forked_repositories", fetch="LAZY")
+     * @Api\Link(url = "source/url", id = "source/id", target = "github_id", required = "true", auto_import = "true")
+     */
+    protected $source;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GithubRepository", mappedBy="source", fetch="LAZY")
+     */
+    protected $forked_repositories;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GithubOrganization", inversedBy="repositories", fetch="LAZY")
+ * @Api\Link(url = "organization/url", id = "organization/id", target = "github_id", required = "true", auto_import = "true")
+     */
+    protected $organization;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GithubRepositoryPermissions", fetch="LAZY", mappedBy="repository")
+     * @Api\Apply(key="permissions")
+     */
+    protected $permissions;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Api\Map(keys={"language"})
+     */
+    protected $language;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"git_url"})
+     */
+    protected $git_url;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Api\Map(keys={"created_at"})
+     */
+    protected $created_at;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Api\Map(keys={"has_wiki"})
+     */
+    protected $has_wiki;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"size"})
+     */
+    protected $size;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Api\Map(keys={"fork"})
+     */
+    protected $fork;
+
+    /**
+     * @ORM\Column(type="string", length=500, nullable=true)
+     * @Api\Map(keys={"description"})
+     */
+    protected $description;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"clone_url"})
+     */
+    protected $clone_url;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"html_url"})
+     */
+    protected $html_url;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"watchers"})
+     */
+    protected $watchers;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"watchers_count"})
+     */
+    protected $watchers_count;
+
+    /**
+     * @ORM\Column(name="`name`", type="string", length=255)
+     * @Api\Map(keys={"name"})
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"url"})
+     */
+    protected $url;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"ssh_url"})
+     */
+    protected $ssh_url;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Api\Map(keys={"private"})
+     */
+    protected $private;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Api\Map(keys={"updated_at"})
+     */
+    protected $updated_at;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"open_issues"})
+     */
+    protected $open_issues;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Api\Map(keys={"open_issues_count"})
+     */
+    protected $open_issues_count;
     
     /**
      * Manufacture an instance
-     * @return \RRaven\Bundle\GitpanelBundle\Entity\GithubRepository
+     * @return \RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository
      */
     public static function manufacture()
     {
@@ -842,10 +843,10 @@ class GithubRepository
     /**
      * Set user
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubUser $user
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubUser $user
      * @return GithubRepository
      */
-    public function setUser(\RRaven\Bundle\GitpanelBundle\Entity\GithubUser $user = null)
+    public function setUser(\RRaven\Bundle\LaughingbearBundle\Entity\GithubUser $user = null)
     {
         $this->user = $user;
         return $this;
@@ -854,7 +855,7 @@ class GithubRepository
     /**
      * Get user
      *
-     * @return RRaven\Bundle\GitpanelBundle\Entity\GithubUser 
+     * @return RRaven\Bundle\LaughingbearBundle\Entity\GithubUser 
      */
     public function getUser()
     {
@@ -872,10 +873,10 @@ class GithubRepository
     /**
      * Add permissions
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubRepositoryPermissions $permissions
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubRepositoryPermissions $permissions
      * @return GithubRepository
      */
-    public function addPermission(\RRaven\Bundle\GitpanelBundle\Entity\GithubRepositoryPermissions $permissions)
+    public function addPermission(\RRaven\Bundle\LaughingbearBundle\Entity\GithubRepositoryPermissions $permissions)
     {
         $this->permissions[] = $permissions;
         return $this;
@@ -884,9 +885,9 @@ class GithubRepository
     /**
      * Remove permissions
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubRepositoryPermissions $permissions
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubRepositoryPermissions $permissions
      */
-    public function removePermission(\RRaven\Bundle\GitpanelBundle\Entity\GithubRepositoryPermissions $permissions)
+    public function removePermission(\RRaven\Bundle\LaughingbearBundle\Entity\GithubRepositoryPermissions $permissions)
     {
         $this->permissions->removeElement($permissions);
     }
@@ -904,10 +905,10 @@ class GithubRepository
     /**
      * Add child_repositories
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $childRepositories
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $childRepositories
      * @return GithubRepository
      */
-    public function addChildRepositorie(\RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $childRepositories)
+    public function addChildRepositorie(\RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $childRepositories)
     {
         $this->child_repositories[] = $childRepositories;
         return $this;
@@ -916,9 +917,9 @@ class GithubRepository
     /**
      * Remove child_repositories
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $childRepositories
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $childRepositories
      */
-    public function removeChildRepositorie(\RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $childRepositories)
+    public function removeChildRepositorie(\RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $childRepositories)
     {
         $this->child_repositories->removeElement($childRepositories);
     }
@@ -936,10 +937,10 @@ class GithubRepository
     /**
      * Add forked_repositories
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $forkedRepositories
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $forkedRepositories
      * @return GithubRepository
      */
-    public function addForkedRepositorie(\RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $forkedRepositories)
+    public function addForkedRepositorie(\RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $forkedRepositories)
     {
         $this->forked_repositories[] = $forkedRepositories;
         return $this;
@@ -948,9 +949,9 @@ class GithubRepository
     /**
      * Remove forked_repositories
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $forkedRepositories
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $forkedRepositories
      */
-    public function removeForkedRepositorie(\RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $forkedRepositories)
+    public function removeForkedRepositorie(\RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $forkedRepositories)
     {
         $this->forked_repositories->removeElement($forkedRepositories);
     }
@@ -968,10 +969,10 @@ class GithubRepository
     /**
      * Set parent
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $parent
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $parent
      * @return GithubRepository
      */
-    public function setParent(\RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $parent = null)
+    public function setParent(\RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $parent = null)
     {
         $this->parent = $parent;
         return $this;
@@ -980,7 +981,7 @@ class GithubRepository
     /**
      * Get parent
      *
-     * @return RRaven\Bundle\GitpanelBundle\Entity\GithubRepository 
+     * @return RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository 
      */
     public function getParent()
     {
@@ -990,10 +991,10 @@ class GithubRepository
     /**
      * Set source
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $source
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $source
      * @return GithubRepository
      */
-    public function setSource(\RRaven\Bundle\GitpanelBundle\Entity\GithubRepository $source = null)
+    public function setSource(\RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository $source = null)
     {
         $this->source = $source;
         return $this;
@@ -1002,7 +1003,7 @@ class GithubRepository
     /**
      * Get source
      *
-     * @return RRaven\Bundle\GitpanelBundle\Entity\GithubRepository 
+     * @return RRaven\Bundle\LaughingbearBundle\Entity\GithubRepository 
      */
     public function getSource()
     {
@@ -1012,10 +1013,10 @@ class GithubRepository
     /**
      * Set organization
      *
-     * @param RRaven\Bundle\GitpanelBundle\Entity\GithubOrganization $organization
+     * @param RRaven\Bundle\LaughingbearBundle\Entity\GithubOrganization $organization
      * @return GithubRepository
      */
-    public function setOrganization(\RRaven\Bundle\GitpanelBundle\Entity\GithubOrganization $organization = null)
+    public function setOrganization(\RRaven\Bundle\LaughingbearBundle\Entity\GithubOrganization $organization = null)
     {
         $this->organization = $organization;
         return $this;
@@ -1024,7 +1025,7 @@ class GithubRepository
     /**
      * Get organization
      *
-     * @return RRaven\Bundle\GitpanelBundle\Entity\GithubOrganization 
+     * @return RRaven\Bundle\LaughingbearBundle\Entity\GithubOrganization 
      */
     public function getOrganization()
     {

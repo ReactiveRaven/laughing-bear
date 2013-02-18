@@ -53,3 +53,10 @@ services:
     rraven.buzz.github:        
         class: Buzz\Browser
         arguments: ["@rraven.buzz.default.client", "@rraven.buzz.github.messagefactory"]
+        
+    rraven.laughingbear.auto_flush:
+        class: RRaven\Bundle\LaughingbearBundle\EventListener\AutoFlush
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+            

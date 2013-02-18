@@ -33,7 +33,10 @@
         "craue/formflow-bundle": "dev-master",
         "eloquent/composer-npm-bridge": "*",
         "nervo/yuicompressor": "2.4.7",
-        "juliendidier/buzz-profiler-bundle": "dev-master"
+        "juliendidier/buzz-profiler-bundle": "dev-master",
+        "stof/doctrine-extensions-bundle": "*",
+        "twitter/bootstrap": "2.2.*",
+        "bmatzner/fontawesome-bundle": "3.0.*"
     },
     "scripts": {
         "post-install-cmd": [

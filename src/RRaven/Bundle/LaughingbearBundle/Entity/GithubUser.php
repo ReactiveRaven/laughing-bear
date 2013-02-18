@@ -8,7 +8,7 @@ use RRaven\Bundle\LaughingbearBundle\Annotations\Api;
 use \DateTime;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="RRaven\Bundle\LaughingbearBundle\Entity\GithubUserRepository")
  */
 class GithubUser
 {
@@ -139,10 +139,15 @@ class GithubUser
      */
     protected $accessToken;
 		
-		/**
-		 * @ORM\OneToMany(targetEntity="GithubRepository", fetch="LAZY", mappedBy="user")
-		 */
-		protected $repositories;
+    /**
+     * @ORM\OneToMany(targetEntity="GithubRepository", fetch="LAZY", mappedBy="user")
+     */
+    protected $repositories;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="GithubOrganization", mappedBy="members")
+     */
+    protected $organizations;
     
     /**
      * Manufacture an instance
@@ -638,5 +643,38 @@ class GithubUser
     public function getRepositories()
     {
         return $this->repositories;
+    }
+
+    /**
+     * Add organizations
+     *
+     * @param \RRaven\Bundle\LaughingbearBundle\Entity\GithubOrganization $organizations
+     * @return GithubUser
+     */
+    public function addOrganization(\RRaven\Bundle\LaughingbearBundle\Entity\GithubOrganization $organizations)
+    {
+        $this->organizations[] = $organizations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove organizations
+     *
+     * @param \RRaven\Bundle\LaughingbearBundle\Entity\GithubOrganization $organizations
+     */
+    public function removeOrganization(\RRaven\Bundle\LaughingbearBundle\Entity\GithubOrganization $organizations)
+    {
+        $this->organizations->removeElement($organizations);
+    }
+
+    /**
+     * Get organizations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrganizations()
+    {
+        return $this->organizations;
     }
 }

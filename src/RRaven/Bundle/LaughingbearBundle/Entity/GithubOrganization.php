@@ -19,106 +19,111 @@ class GithubOrganization
      */
     protected $id;
     
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"type"})
-		 */
-		protected $type;
-		
-		/**
-		 * @ORM\Column(type="string", length=255, nullable=true)
-		 * @Api\Map(keys={"email"})
-		 */
-		protected $email;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"following"})
-		 */
-		protected $following;
-		
-		/**
-		 * @ORM\Column(type="string", length=2000, nullable=true)
-		 * @Api\Map(keys={"html_url"})
-		 */
-		protected $html_url;
-		
-		/**
-		 * @ORM\Column(type="string", length=255, nullable=true)
-		 * @Api\Map(keys={"location"})
-		 */
-		protected $location;
-		
-		/**
-		 * @ORM\Column(type="string", length=2000, nullable=true)
-		 * @Api\Map(keys={"blog"})
-		 */
-		protected $blog;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"public_gists"})
-		 */
-		protected $public_gists;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"nae"})
-		 */
-		protected $name;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"company"})
-		 */
-		protected $company;
-		
-		/**
-		 * @ORM\Column(type="string", length=2000)
-		 * @Api\Map(keys={"url"})
-		 */
-		protected $url;
-		
-		/**
-		 * @ORM\Column(type="string", length=255)
-		 * @Api\Map(keys={"login"})
-		 */
-		protected $login;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"followers"})
-		 */
-		protected $followers;
-		
-		/**
-		 * @ORM\Column(type="string", length=2000)
-		 * @Api\Map(keys={"avatar_url"})
-		 */
-		protected $avatar_url;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"id"})
-		 */
-		protected $github_id;
-		
-		/**
-		 * @ORM\Column(type="integer")
-		 * @Api\Map(keys={"public_repos"})
-		 */
-		protected $public_repos;
-		
-		/**
-		 * @ORM\OneToMany(targetEntity="GithubRepository", mappedBy="organization")
-		 */
-		protected $repositories;
-		
-		/**
-		 * @ORM\Column(type="datetime")
-		 * @Api\Map(keys={"created_at"})
-		 */
-		protected $created_at;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"type"})
+     */
+    protected $type;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Api\Map(keys={"email"})
+     */
+    protected $email;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"following"})
+     */
+    protected $following;
+
+    /**
+     * @ORM\Column(type="string", length=2000, nullable=true)
+     * @Api\Map(keys={"html_url"})
+     */
+    protected $html_url;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Api\Map(keys={"location"})
+     */
+    protected $location;
+
+    /**
+     * @ORM\Column(type="string", length=2000, nullable=true)
+     * @Api\Map(keys={"blog"})
+     */
+    protected $blog;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"public_gists"})
+     */
+    protected $public_gists;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"nae"})
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"company"})
+     */
+    protected $company;
+
+    /**
+     * @ORM\Column(type="string", length=2000)
+     * @Api\Map(keys={"url"})
+     */
+    protected $url;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Api\Map(keys={"login"})
+     */
+    protected $login;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"followers"})
+     */
+    protected $followers;
+
+    /**
+     * @ORM\Column(type="string", length=2000)
+     * @Api\Map(keys={"avatar_url"})
+     */
+    protected $avatar_url;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"id"})
+     */
+    protected $github_id;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Api\Map(keys={"public_repos"})
+     */
+    protected $public_repos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="GithubRepository", mappedBy="organization")
+     */
+    protected $repositories;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="GithubUser", inversedBy="organizations")
+     */
+    protected $members;
+    
+    /**
+     * @ORM\Column(type="datetime")
+     * @Api\Map(keys={"created_at"})
+     */
+    protected $created_at;
     
     /**
      * Manufacture an instance
@@ -525,5 +530,38 @@ class GithubOrganization
     public function getRepositories()
     {
         return $this->repositories;
+    }
+
+    /**
+     * Add members
+     *
+     * @param \RRaven\Bundle\LaughingbearBundle\Entity\GithubUser $members
+     * @return GithubOrganization
+     */
+    public function addMember(\RRaven\Bundle\LaughingbearBundle\Entity\GithubUser $members)
+    {
+        $this->members[] = $members;
+    
+        return $this;
+    }
+
+    /**
+     * Remove members
+     *
+     * @param \RRaven\Bundle\LaughingbearBundle\Entity\GithubUser $members
+     */
+    public function removeMember(\RRaven\Bundle\LaughingbearBundle\Entity\GithubUser $members)
+    {
+        $this->members->removeElement($members);
+    }
+
+    /**
+     * Get members
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMembers()
+    {
+        return $this->members;
     }
 }
