@@ -1,6 +1,8 @@
 Symfony Standard Edition
 ========================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ReactiveRaven/laughing-bear.svg)](https://greenkeeper.io/)
+
 Welcome to the Symfony Standard Edition - a fully-functional Symfony2
 application that you can use as the skeleton for your new applications.
 
